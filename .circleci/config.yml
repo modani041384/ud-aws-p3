@@ -1,7 +1,7 @@
 version: 2.1
 
 orbs:
-  slack: circleci/slack@4.12.5
+  slack: circleci/slack@4.1
 
 jobs:
   build-frontend:
@@ -78,7 +78,7 @@ jobs:
           command: |
             cd frontend
             npm install
-            npm audit --audit-level=critical --force
+            npm audit fix --audit-level=critical --force
             npm audit fix --force
             npm audit --audit-level=critical
 
