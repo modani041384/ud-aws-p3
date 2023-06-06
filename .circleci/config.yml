@@ -69,7 +69,10 @@ jobs:
     steps:
       - checkout
       - restore_cache:
+          keys: [frontend-build]
       - run:
+          name: Analyse frontend
+          command: |
 
   scan-backend:
     docker:
@@ -77,7 +80,10 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-      - run: 
+          keys: [backend-build]
+      - run:
+          name: Analyse backend
+          command: |
 
 #   deploy-infrastructure:
 #     docker:
