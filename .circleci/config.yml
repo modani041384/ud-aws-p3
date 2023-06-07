@@ -152,20 +152,20 @@ jobs:
               --template-file .circleci/files/backend.yml \
               --stack-name udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7} \
               --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:7}
-      - run:
-          name: Ensure front-end infrastructure exist
-          command: |
-            aws cloudformation deploy \
-              --template-file .circleci/files/frontend.yml \
-              --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7} \
-              --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:7}
-      - run:
-          name: Add back-end ip to ansible inventory
-          command: |
-            echo $(aws ec2 describe-instances \
-            --query 'Reservations[*].Instances[*].PublicIpAddress' \
-            --filters Name=tag:aws:cloudformation:stack-name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7} \
-            --output text) >> ~/project/.circleci/ansible/inventory.txt
+      # - run:
+      #     name: Ensure front-end infrastructure exist
+      #     command: |
+      #       aws cloudformation deploy \
+      #         --template-file .circleci/files/frontend.yml \
+      #         --stack-name udapeople-frontend-${CIRCLE_WORKFLOW_ID:0:7} \
+      #         --parameter-overrides ID=${CIRCLE_WORKFLOW_ID:0:7}
+      # - run:
+      #     name: Add back-end ip to ansible inventory
+      #     command: |
+      #       echo $(aws ec2 describe-instances \
+      #       --query 'Reservations[*].Instances[*].PublicIpAddress' \
+      #       --filters Name=tag:aws:cloudformation:stack-name,Values=udapeople-backend-${CIRCLE_WORKFLOW_ID:0:7} \
+      #       --output text) >> ~/project/.circleci/ansible/inventory.txt
       - persist_to_workspace:
           root: ~/
           paths:
@@ -275,7 +275,8 @@ jobs:
   #     - destroy-environment:
   #         workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
   #     - revert-migrations:
-  #         workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}                    
+  #         workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}        
+
   # deploy-backend:
   #   docker:
   #     - image: python:3.7-alpine3.16
@@ -343,6 +344,7 @@ jobs:
   #         workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
   #     - revert-migrations:
   #         workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+
   # cloudfront-update:
   #   docker:
   #     - image: circleci/node:13.8.0
@@ -416,6 +418,7 @@ jobs:
   #         workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
   #     - revert-migrations:
   #         workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
+
 workflows:
   default:
     jobs:
